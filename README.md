@@ -20,3 +20,5 @@ A Ruby On Rails plugin for [Webistrano](https://github.com/peritor/webistrano) t
       }   
     }
   ```
+
+* Restart the Rails server

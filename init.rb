@@ -2,14 +2,14 @@ require 'webistrano_slack'
 
 Deployment.class_eval do
 
-  alias :complete_with_error_original! :complete_with_error!
+  alias complete_with_error_original! complete_with_error!
   def complete_with_error!
     complete_with_error_original!
     message = "[#{self.stage.project.name}] #{self.user.login} deployed to #{self.stage.name} with errors! <#{self.url}|View log>"
     WebistranoSlack.send_to_slack(self, WebistranoConfig[:slack_settings], message) unless WebistranoConfig[:slack_settings].nil?
   end
 
-  alias :complete_successfully_original! :complete_successfully!
+  alias complete_successfully_original! complete_successfully!
   def complete_successfully!
     complete_successfully_original!
     message = "[#{self.stage.project.name}] #{self.user.login} deployed to #{self.stage.name} successfully! <#{self.url}|View log>"

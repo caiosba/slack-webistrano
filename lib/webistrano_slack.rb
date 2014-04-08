@@ -2,7 +2,7 @@ require 'net/http'
 
 module WebistranoSlack
 
-  def self.send_to_slack(deployment, settings, success = true)
+  def self.send_to_slack(deployment, settings, message)
 
     token = settings[:token]
     instance = settings[:instance]
@@ -10,16 +10,8 @@ module WebistranoSlack
     channel = settings[:channels][deployment.stage.project.name] || '#general'
     slack_url = URI.parse("https://#{instance}.slack.com/services/hooks/incoming-webhook?token=#{token}")
 
-    # FIXME: Better to try to call project_stage_deployment_path here
-    deployment_path = "projects/#{deployment.stage.project.id}/stages/#{deployment.stage.id}/deployments/#{deployment.id}"
-    deployment_url = URI.join(settings[:webistrano_host], deployment_path)
-
-    msg = "[#{deployment.stage.project.name}] #{deployment.user.login} deployed to #{deployment.stage.name} "
-    msg += success ? "successfully" : "with errors"
-    msg += "! <#{deployment_url}|View log>"
-
     params = {
-      :text => msg
+      :text => message
     }
 
     params[:username] = username if username

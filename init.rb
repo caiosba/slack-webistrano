@@ -5,14 +5,14 @@ Deployment.class_eval do
   alias complete_with_error_original! complete_with_error!
   def complete_with_error!
     complete_with_error_original!
-    message = "[#{self.stage.project.name}] #{self.user.login} deployed to #{self.stage.name} with errors! <#{self.url}|View log>"
+    message = "[#{self.stage.project.name}] #{self.user.login} did #{self.task} to #{self.stage.name} with errors! (##{self.id}) <#{self.url}|View log>"
     WebistranoSlack.send_to_slack(self, WebistranoConfig[:slack_settings], message) unless WebistranoConfig[:slack_settings].nil?
   end
 
   alias complete_successfully_original! complete_successfully!
   def complete_successfully!
     complete_successfully_original!
-    message = "[#{self.stage.project.name}] #{self.user.login} deployed to #{self.stage.name} successfully! <#{self.url}|View log>"
+    message = "[#{self.stage.project.name}] #{self.user.login} did #{self.task} to #{self.stage.name} successfully! (##{self.id}) <#{self.url}|View log>"
     WebistranoSlack.send_to_slack(self, WebistranoConfig[:slack_settings], message) unless WebistranoConfig[:slack_settings].nil?
   end
 
@@ -26,7 +26,7 @@ end
 Webistrano::Deployer.class_eval do
   alias execute_original! execute!
   def execute!
-    message = "[#{deployment.stage.project.name}] #{deployment.user.login} started deploying to #{deployment.stage.name}. <#{deployment.url}|View log>"
+    message = "[#{deployment.stage.project.name}] #{deployment.user.login} started to #{deployment.task} to #{deployment.stage.name} (##{deployment.id}). <#{deployment.url}|View log>"
     WebistranoSlack.send_to_slack(deployment, WebistranoConfig[:slack_settings], message) unless WebistranoConfig[:slack_settings].nil?
     execute_original!
   end

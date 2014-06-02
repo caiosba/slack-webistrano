@@ -1,7 +1,7 @@
 webistrano_slack
 ================
 
-A Ruby On Rails plugin for [Webistrano](https://github.com/peritor/webistrano) to send deployment updates to [Slack](https://slack.com/) channels.
+A Ruby On Rails plugin for [Webistrano](https://github.com/peritor/webistrano) to send deployment updates to [Slack](https://slack.com/) channels. It works better on production mode, because on development mode the models can be reloaded after the plugin, and so the methods are not correctly overwritten.
 
 # Setup
 * Setup a new Slack instance and note the subdomain used.

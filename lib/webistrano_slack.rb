@@ -4,10 +4,12 @@ module WebistranoSlack
 
   def self.send_to_slack(deployment, settings, message)
 
+    return if (settings[:channels][deployment.stage.project.name] === '')
+
     token = settings[:token]
     instance = settings[:instance]
     username = settings[:username]
-    channel = settings[:channels][deployment.stage.project.name] || '#general'
+    channel = settings[:channels][deployment.stage.project.name] || settings[:default_channel]
     slack_url = URI.parse("https://#{instance}.slack.com/services/hooks/incoming-webhook?token=#{token}")
 
     params = {

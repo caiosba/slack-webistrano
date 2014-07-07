@@ -15,8 +15,12 @@ A Ruby On Rails plugin for [Webistrano](https://github.com/peritor/webistrano) t
       :token => 'slack_token',
       :instance => 'slack_subdomain',
       :username => 'slack_username',
+      # If a project is not present on the hash "channels" below, the notifications will go to the default channel
+      :default_channel => '#slack_channel_name',
       :channels => {
-        'Webistrano Project Name' => '#slack_channel_name'
+        'Webistrano Project Name' => '#slack_channel_name',
+        # Mapping a project to an empty string will disable notifications for this project 
+        'Project that you do not want notifications' => ''
       }   
     }
   ```
